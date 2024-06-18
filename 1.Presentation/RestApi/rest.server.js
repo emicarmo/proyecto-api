@@ -6,6 +6,12 @@ class RestApiServer{
         this.server = express();
         this.port = 3000;
         this.basePath = path.join(__dirname, 'Presentation', 'RestApi');
+
+        //Initialized middlewares
+        this.middlewares();
+        
+        //Initialized Routes
+        this.routes();
     }
 
     middlewares(){
@@ -17,8 +23,6 @@ class RestApiServer{
     }
 
     start(){
-        this.routes();
-        this.middlewares();
         this.server.listen(this.port, ()=>{
             console.log(`Rest Api server initiated on  port: ${this.port}`);
         });
