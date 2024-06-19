@@ -12,13 +12,18 @@ class BaseModel{
 
     async findById(id){
         const sql = `SELECT * FROM ${this.tableName} WHERE id = ?`;
-        const results = await this.query(sql, [id]);
-        return results[0];
+        return await this.query(sql, [id]);
     }
 
     async findAll(){
         const sql = `SELECT * FROM ${this.tableName}`;
         return await this.query(sql);
+    }
+
+    async update(fields, values, id){
+        const clouse = fields.map(field => `${field}=?`). join(', ');
+        const sql = `UPDATE ${this.tableName} SET ${clouse} WHERE id = ?`;
+        return await this.query(sql, [...values, id]);
     }
 }
 
