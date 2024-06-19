@@ -9,9 +9,9 @@
   "author": "Ceij",
   "license": "ISC",
   "dependencies": {
-    "dot-env": "^0.0.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mysql": "^2.18.1"
+    "mysql2": "^3.10.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.3"
