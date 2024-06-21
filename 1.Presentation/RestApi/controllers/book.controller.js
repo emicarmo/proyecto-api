@@ -1,20 +1,19 @@
 const { request, response } = require('express');
-const BookModel = require('../../../3.Persistence/DAO.MySql/DAOModels/book.model');
-
+const { BookRepository } = require('../../../3.Persistence/DAO.MySql');
 
 
 class booksController {
     constructor(){
-        // El controlador implementa directamente el modelo de datos
-        // aunque lo ideal seria utilizarlo a traves de los diferentes casos de uso
+        // El controlador implementa directamente el repositorio de datos
+        // aunque lo ideal seria utilizarlo a traves de los diferentes casos de uso o modelos
         // implementandos en domain, desde alli tambien se deberian realizar las validaciones y el mapeo entre
         // entidades.
-        this.bookModel = new BookModel();
+        this.bookRepository = new BookRepository();
     }
 
     // Query functions
     async getAll(req = request, res = response){
-        const result = await this.bookModel.findAll();
+        const result = await this.bookRepository.findAll();
         res.json({
             msg: 'Return a list of paginate books',
             result
@@ -23,8 +22,8 @@ class booksController {
     
     async getById(req = request, res = response){
         let { id } = req.params;
-        this.bookModel.id = id;
-        const result = await this.bookModel.findById();
+        this.bookRepository.id = id;
+        const result = await this.bookRepository.findById();
         if(result.length > 0){
             res.json({
                 msg: 'Ok',
@@ -69,9 +68,31 @@ class booksController {
     }
 
     // Commands functions
-    createBook(req = request, res = response){
+    async createBook(req = request, res = response){
+        const fields = [
+            "nombre",
+            "categoria_id",
+            "editorial",
+            "precio",
+            "stock",
+            "descripcion",
+            "imagen"
+        ]
+
+        const values = [
+            `"${req.body.name}"`,
+            `"${req.body.category}"`,
+            `"${req.body.publishing}"`,
+            `"${req.body.price}"`,
+            `"${req.body.stock}"`,
+            `"${req.body.description}"`,
+            `"${req.body.image}"`,
+            
+        ]
+        const result = await this.bookRepository.add(fields, values);
+
         res.json({
-            msg: 'Resource created'
+            result
         });
     }
 
@@ -84,10 +105,10 @@ class booksController {
     //TODO: Investigar que devuelven los comandos sql para poder tomar decisiones de respuesta.
     //Nota: toda la logica de mapeo quedaria mejor si se implementa en Domain.
     updateBook(req = request, res = response){
-        this.bookModel.id = 2;
-        this.bookModel.title = 'Calculus'
-        this.bookModel.author = 'Thomas Edinson';
-        this.bookModel.update();
+        this.bookRepository.id = 2;
+        this.bookRepository.title = 'Calculus'
+        this.bookRepository.author = 'Thomas Edinson';
+        this.bookRepository.update();
         res.json({
             msg: 'Resource updated'
         });
