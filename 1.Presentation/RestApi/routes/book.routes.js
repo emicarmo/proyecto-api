@@ -8,11 +8,6 @@ const booksController = new BooksController();
 // Query Routes Definition:
 // Note: Routes must be specified from most specific to least specific.
 /// Es necesario bindear hacia la instancia de la clase para que no se pierda el contexto *
-router.get('/search', booksController.advanceSearch);
-router.get('/isbn/:isbn', booksController.getByIsbn);
-router.get('/title/:title', booksController.getByTitle);
-router.get('/author/:author', booksController.getByAuthor);
-router.get('/:id', booksController.getById.bind(booksController));
 router.get('/', booksController.getAll.bind(booksController));
 
 // Command routes definition:

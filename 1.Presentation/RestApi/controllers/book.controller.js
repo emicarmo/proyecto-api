@@ -19,53 +19,6 @@ class booksController {
             result
         });
     }
-    
-    async getById(req = request, res = response){
-        let { id } = req.params;
-        this.bookRepository.id = id;
-        const result = await this.bookRepository.findById();
-        if(result.length > 0){
-            res.json({
-                msg: 'Ok',
-                result
-            });
-            return;    
-        }
-
-        res.status(404).json({
-            msg: 'Not Found'
-        })
-    }
-    getByIsbn(req = request, res = response){
-        let { isbn } = req.params;
-        res.json({
-            msg: 'Ok',
-            isbn
-        })
-    }
-    
-    getByTitle(req = request, res = response){
-        let { title } = req.params;
-        res.json({
-            msg: 'Ok',
-            title
-        })
-    }
-    
-    getByAuthor(req = request, res = response){
-        let { author } = req.params;
-        res.json({
-            msg: 'Ok',
-            author
-        })
-    }
-    
-    //TODO: Implement te advance search
-    advanceSearch(req = request, res = response){
-        res.json({
-            msg: 'To be implemented'
-        })
-    }
 
     // Commands functions
     async createBook(req = request, res = response){

@@ -3,9 +3,6 @@ const dataContext = require('../db.config');
 class BaseRepository{
     constructor(tableName){
         this.tableName = tableName;
-        this.pageSize = 25;
-        this.page = 1;
-        this.offset = (this.page - 1) * this.pageSize;
     }
 
     async query(sql, params){
@@ -20,7 +17,7 @@ class BaseRepository{
     }
 
     async findAll(fields = null){
-        const sql = `SELECT ${(!fields)?'*':fields.join(', ')} FROM ${this.tableName} LIMIT ${this.pageSize} OFFSET ${this.offset}`;
+        const sql = `SELECT ${(!fields)?'*':fields.join(', ')} FROM ${this.tableName}`;
         return await this.query(sql);
     }
 
