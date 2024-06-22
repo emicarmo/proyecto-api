@@ -13,7 +13,6 @@ class BaseRepository{
         return results;
     }
 
-
     //Metodos de busqueda y filtrado
     async findById(id){
         const sql = `SELECT * FROM ${this.tableName} WHERE id = ?`;
@@ -34,7 +33,7 @@ class BaseRepository{
     }
 
     async update(fields, values, id){
-        const clouse = fields.map(field => `${field}=?`). join(', ');
+        const clouse = fields.map(field => `${field}=?`).join(', ');
         const sql = `UPDATE ${this.tableName} SET ${clouse} WHERE id = ?`;
         return await this.query(sql, [...values, id]);
     }

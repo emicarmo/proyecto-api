@@ -104,15 +104,6 @@ class booksController {
 
     //TODO: Investigar que devuelven los comandos sql para poder tomar decisiones de respuesta.
     //Nota: toda la logica de mapeo quedaria mejor si se implementa en Domain.
-    updateBook(req = request, res = response){
-        this.bookRepository.id = 2;
-        this.bookRepository.title = 'Calculus'
-        this.bookRepository.author = 'Thomas Edinson';
-        this.bookRepository.update();
-        res.json({
-            msg: 'Resource updated'
-        });
-    }
 
     removeBook(req = request, res = response){
         res.json({
@@ -121,6 +112,5 @@ class booksController {
     }
     
 }
-
 
 module.exports = booksController;

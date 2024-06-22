@@ -6,7 +6,6 @@ class RestApiServer{
         this.server = express();
         this.port = 3000;
         this.basePath = path.join(__dirname, 'Presentation', 'RestApi');
-
         //Initialized middlewares
         this.middlewares();
         

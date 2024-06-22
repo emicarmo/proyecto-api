@@ -17,7 +17,7 @@ router.get('/', booksController.getAll.bind(booksController));
 
 // Command routes definition:
 router.post('/', booksController.createBook.bind(booksController));
-router.put('/:id', booksController.updateBook.bind(booksController));
+router.put('/:id', booksController.editBook.bind(booksController));
 //router.patch('/:id', booksController.updateBook);
 router.delete('/:id', booksController.removeBook.bind(booksController));
 
