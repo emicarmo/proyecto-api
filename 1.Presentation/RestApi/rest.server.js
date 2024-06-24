@@ -1,11 +1,12 @@
+require('dotenv').config();
 const express = require('express');
-const path = require('path');
 
 class RestApiServer {
     constructor() {
         this.server = express();
-        this.port = 3000;
-        this.basePath = path.join(__dirname, 'Presentation', 'RestApi');
+        this.port = process.env.RESTAPI_PORT || 3000;
+        
+        
         //Initialized middlewares
         this.middlewares();
         //Initialized Routes
