@@ -25,6 +25,7 @@ class RestApiServer {
             console.log(`Rest Api server initiated on  port: ${this.port}`);
         });
     }
+    
 }
 
 module.exports = RestApiServer;

@@ -42,9 +42,11 @@ class DataBaseServer {
     dbConnection() {
         return this.pool;
     }
+
     dbPort() {
         return this.port;
     }
+    
     dbName() {
         return this.name;
     }
@@ -55,7 +57,7 @@ module.exports = DataBaseServer;
 
 
 
-/* ---------------- Anteriormente Con Funciones ---------------------------------- */
+/* ---------------- Anteriormente Con Funciones --------------------------------- */
 /*const mysql = require('mysql2');
 require('dotenv').config();
 
