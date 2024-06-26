@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 
 class RestApiServer {
     constructor() {
@@ -15,6 +16,7 @@ class RestApiServer {
 
     middlewares() {
         this.server.use(express.json());
+        this.server.use(cors());
     }
 
     routes() {
