@@ -53,8 +53,8 @@ class DataBaseServer {
 
 }
 
-module.exports = DataBaseServer;
 
+module.exports = DataBaseServer;
 
 
 /* ---------------- Anteriormente Con Funciones --------------------------------- */

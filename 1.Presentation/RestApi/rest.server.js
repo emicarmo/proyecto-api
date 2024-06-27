@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();//Se requiere para usar variables de entorno
 
 class RestApiServer {
@@ -12,6 +13,7 @@ class RestApiServer {
 
     middlewares() {
         this.server.use(express.json());
+        this.server.use(cors());
         //Agregar aquí otros middleware (recordar importacion si es necesario)
     }
 
@@ -27,6 +29,7 @@ class RestApiServer {
     }
     
 }
+
 
 module.exports = RestApiServer;
 
