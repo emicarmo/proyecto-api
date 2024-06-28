@@ -1,10 +1,16 @@
-Actualizo: martes 25 de junio 2024 - 23:15
-Se incluyen comentarios al margen para recordar lo aprendido
+- Actualizo: jueves 27 de junio 2024 - 21:30
+Creo archivo validator.js para validar el formato de los datos en carpeta Utils en raiz. 
+Creo los archivos user. model, controllers y routes (este en proseso, aun no definido)
+Agrego archivos index.js donde hizo falta
 
-Actualizo: martes 25 de junio 2024 - 08:00 hs.
+- Actualizo: martes 25 de junio 2024 - 23:15
+Se incluyen comentarios al margen para recordar lo aprendido
+Creo archivo user.repository.js
+
+- Actualizo: martes 25 de junio 2024 - 08:00 hs.
 a.- front.server.js y rest.server.js para que utilizen variables de entorno
 b.- db.config.js para que utilize variables de entorno, cambio de funcion a clases para seguir la coherencia de los otros archivos, agrego validacion 
-para que se asegure que kla base existe y sino que la cree, actualizo el pool de conexion para pasarlo a app.js
+para que se asegure que la base existe y sino que la cree, actualizo el pool de conexion para pasarlo a app.js
 c.- app.js para que coordine con los cambios realizados
 
 d.- controlar al crear archivo .env en su local que tenga estos nombres:
