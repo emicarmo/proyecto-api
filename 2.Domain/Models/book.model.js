@@ -24,7 +24,6 @@ class BookModel {
         }catch(error){
             return { error };
         }
-
     }
 
     async update(bookEntity, id){
@@ -48,6 +47,7 @@ class BookModel {
             return error
         }
     }
+    
 }
 
 

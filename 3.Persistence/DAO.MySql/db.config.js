@@ -15,7 +15,6 @@ class DataBaseServer {
             connectionLimit: 10,
             queueLimit: 0
         }).promise();
-
     }
     //Creamos, si no existe, o confirmamos la base de datos
     async dbReady() {
@@ -36,7 +35,6 @@ class DataBaseServer {
         } finally {
             await dbConnection.end();
         }
-
     }
     //inicializamos y guardamos estos datos que seran llamados al momento de Instanciar la clase
     dbConnection() {

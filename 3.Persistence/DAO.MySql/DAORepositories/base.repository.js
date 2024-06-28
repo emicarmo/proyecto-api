@@ -15,7 +15,6 @@ class BaseRepository{ // Creamos clase general para realizar metodos CRUD
             console.error(`Error ejecutando query: ${sql}`, error);
             throw error;
         }
-
     }
 
     // Metodos de busqueda y filtrado

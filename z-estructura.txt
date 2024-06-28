@@ -5,19 +5,22 @@ PROYECTO-API/
         RestApi/
             controllers/
                 book.controller.js
+                index.js
                 usuario.controller.js
             middleware/
                 auth.middleware.js
             routes/
                 book.routes.js
+                user.routes.js
             rest.server.js          
     2.Domain
         Models/
             book.model.js
             index.js
+            user.model.js
     .gitkeep     
     3.Persistence
-        DAO:MySql/
+        DAO.MySql/
             DAORepositories/
                 base.repository.js
                 book.repository.js
@@ -26,6 +29,8 @@ PROYECTO-API/
             index.js
         .gitkeep 
     node_modules/
+    Utils/
+        validator.js
     .env            
     .gitignore
     app.js
