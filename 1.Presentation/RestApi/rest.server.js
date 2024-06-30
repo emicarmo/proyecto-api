@@ -13,13 +13,14 @@ class RestApiServer {
 
     middlewares() {
         this.server.use(express.json());
-        this.server.use(cors());
-        //Agregar aquí otros middleware (recordar importacion si es necesario)
+        this.server.use(cors({origin:'FRONTEND_PORT'}));
+        //Agregar aqui otros middleware (recordar importacion si es necesario)
     }
 
     routes() {
         this.server.use('/api/books', require('./routes/book.routes'));
-        //Agregar aquí otras rutas
+        this.server.use('/api/users', require('./routes/user.routes'));//Agregada para usuarios
+        //Agregar aqui otras rutas
     }
 
     start() {
