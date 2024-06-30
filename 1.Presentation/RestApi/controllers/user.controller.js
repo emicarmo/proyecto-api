@@ -58,11 +58,37 @@ class UsersController {
     }
 
     // Commands functions
+    /* Comento para poner una mas especifica para buscar error deregfistro por campos requeridos
     async createUser(req = request, res = response) {
         try {
             const userEntity = req.body;
             validator.validateUser(userEntity);
             const result = await this.model.add(userEntity);
+            res.json({ result, userEntity });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    */
+
+    async createUser(req = request, res = response) {
+        try {
+            const { usuario, email, contrasena } = req.body;// Extraigo solo los campos necesarios del body
+
+            if (!usuario || !email || !contrasena) {// Valido
+                return res.status(400).json({ error: 'Debe proporcionar nombre, email y contraseña' });
+            }
+
+            const userEntity = {// Creamos un objeto con estos campos
+                usuario,
+                email,
+                contrasena
+            };
+
+            validator.validateUser(userEntity);// Valida la entidad del usuario
+
+            const result = await this.model.add(userEntity);// Agregamos el usuario utilizando el modelo
+
             res.json({ result, userEntity });
         } catch (error) {
             res.status(500).json({ error: error.message });

@@ -55,6 +55,7 @@ class DataBaseServer {
 module.exports = DataBaseServer;
 
 
+
 /* ---------------- Anteriormente Con Funciones --------------------------------- */
 /*const mysql = require('mysql2');
 require('dotenv').config();

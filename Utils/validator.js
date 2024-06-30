@@ -8,15 +8,15 @@ class Validator {
             usuario: Joi.string().max(45).required(),
             email: Joi.string().email().max(100).required(),
             contrasena: Joi.string().min(8).max(45).required(),
-            nombre: Joi.string().max(45).required(),
-            apellido: Joi.string().max(45).required(),
+            nombre: Joi.string().max(45).optional(),// Cambio a optional para registro nuevo usuario
+            apellido: Joi.string().max(45).optional(),// Cambio a optional para registro nuevo usuario
             fecha_nacimiento: Joi.date().optional().allow(null),
-            telefono: Joi.string().max(45).required(),
-            direccion: Joi.string().max(255).required(),
-            ciudad: Joi.string().max(100).required(),
-            provincia: Joi.string().max(100).required(),
-            pais: Joi.string().max(45).required(),
-            codigo_postal: Joi.string().max(45).required(),
+            telefono: Joi.string().max(45).optional(),// Cambio a optional para registro nuevo usuario
+            direccion: Joi.string().max(255).optional(),// Cambio a optional para registro nuevo usuario
+            ciudad: Joi.string().max(100).optional(),// Cambio a optional para registro nuevo usuario
+            provincia: Joi.string().max(100).optional(),// Cambio a optional para registro nuevo usuario
+            pais: Joi.string().max(45).optional(),// Cambio a optional para registro nuevo usuario
+            codigo_postal: Joi.string().max(45).optional(),// Cambio a optional para registro nuevo usuario
             rol: Joi.string().valid('administrador', 'cliente').default('cliente'),
             estado: Joi.string().valid('activo', 'inactivo').default('activo')
         });

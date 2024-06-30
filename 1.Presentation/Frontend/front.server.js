@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');// Se requiere para las direcciones de archivos y directorios
+//const FrontStaticRoutes = require('../RestApi/routes/front.static.routes'); // Importamos las rutas estaticas del frontend
 require('dotenv').config();// Se requiere para usar variables de entorno
 
 class FrontServer{
@@ -19,7 +20,7 @@ class FrontServer{
     }
 
     routes(){
-        this.server.use('/', require('../RestApi/routes/front.static.routes')); // Importa y usa el archivo de rutas del frontend para servir las solicitudes
+        //this.server.use('/api', FrontStaticRoutes); // Archivo de rutas del frontend para servir las solicitudes
     }
     
     async start(){

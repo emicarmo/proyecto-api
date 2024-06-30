@@ -1,15 +1,16 @@
-const dataContext = require('../db.config');// Importamos la configuracion de la conexion a la base
+const DataBaseServer = require('../db.config');// Importamos la configuracion de la conexion a la base
 
 class BaseRepository{ // Creamos clase general para realizar metodos CRUD
     constructor(tableName){
         this.tableName = tableName;// Nombre de la tabla elegida en base de datos
         this.fields = null;// Inicializamos campos a null
         this.values = null;// Inicializamos valores a null
+        this.dataBaseServer = new DataBaseServer(); // Instanciamos de DataBaseServer
     }
 
     async query(sql, params){//Se agrega aqui bloque try-catch aqui para el manejo de errores ya que todos los metodos usan this.query
         try{
-            const [results, ] = await dataContext.execute(sql, params);// Consulta SQL generica con los parametros proporcionados
+            const [results, ] = await this.dataBaseServer.dbConnection().execute(sql, params);// Consulta SQL generica con los parametros proporcionados
             return results;
         } catch (error){
             console.error(`Error ejecutando query: ${sql}`, error);

@@ -2,9 +2,28 @@ const express = require('express');
 const path = require('path');
 require('dotenv').config();
 
-const router = express.Router();
-const basePath = path.join(__dirname, '../', process.env.FRONTEND_PATH);
 
+const router = express.Router();
+const basePath = path.join(__dirname, process.env.FRONTEND_PATH);
+
+/* ------------- Ruta para obtener la configuracion del backend ------------- */
+router.get('/config', (req, res) => {
+    console.log('Solicitud recibida en /api/config');
+    try {
+        const config = {
+            backendUrl: process.env.BACKEND_URL// || 'http://localhost:3000'
+        };
+        
+        console.log('Enviando configuración:', config);
+        res.json(config);
+    } catch (error) {
+        console.error('Error al obtener la configuración:', error);
+        res.status(500).json({ error: 'Error al obtener la configuración del backend' });
+    }
+
+});
+
+/* ---------- Rutas estaticas del front -------------- */
 router.get('/registro.html', (req, res) => {
     res.sendFile(path.join(basePath, 'registro.html'));
 });
@@ -22,7 +41,7 @@ router.get('/productos.html', (req, res) => {
 });
 
 router.get('*', (req, res) => {
-    res.sendFile(path.join(basePath, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 module.exports = router;

@@ -1,17 +1,18 @@
 const { Router } = require('express');
-const UsersController = require('../controllers/user.controller');
+const { UsersController } = require('../controllers/index');
 //const { authMiddleware, adminMiddleware } = require('Utils');// Ver donde poner para despues crear e importar
 
 const router = Router();
 const usersController = new UsersController();
 
 /* --------------------- Ruta para enviar configuracion al front ----------------------------- */
+/*
 router.get('/config', (req, res) => {
     res.json({
         backendUrl: process.env.BACKEND_URL // Variable de entorno del backend para ser enviada
     });
 });
-
+*/
 /* --------------------- Rutas para usuarios ----------------------------- */
 
 router.post('/usuario/register', usersController.createUser.bind(usersController));// Registro de usuario
