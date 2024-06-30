@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { BookModel } = require('../../../2.Domain/Models/index');
+const BookModel = require('../../../2.Domain/Models/index.js');
 
 
 class booksController {

@@ -7,7 +7,6 @@ class RestApiServer {
         this.server = express();
         this.port = process.env.RESTAPI_PORT || 3000;
         
-        
         //Initialized middlewares
         this.middlewares();
         //Initialized Routes
