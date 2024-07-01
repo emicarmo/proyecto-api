@@ -1,21 +1,26 @@
+//IMPORTS
+
+// Importamos Router desde express, que nos permite crear manejadores de rutas modulares y montables, y el controlador de libros
 const { Router } = require('express');
 const BooksController = require('../controllers/book.controller');
 
+//INSTANCIAS
+
+// Creamos una instancia de Router y del controlador de libros
 const router = Router();
 const booksController = new BooksController(); 
 
+// Definición de las rutas de consulta (Query Routes):
+// Nota: Las rutas deben especificarse de la más específica a la menos específica para evitar conflictos.
 
-// Query Routes Definition:
-// Note: Routes must be specified from most specific to least specific.
-/// Es necesario bindear hacia la instancia de la clase para que no se pierda el contexto *
-router.get('/', booksController.getAll.bind(booksController));
-router.get('/:id', booksController.getById.bind(booksController));
+router.get('/', booksController.getAll.bind(booksController)); // Ruta para obtener todos los libros
+router.get('/:id', booksController.getById.bind(booksController)); // Ruta para obtener un libro por su ID
 
-// Command routes definition:
-router.post('/', booksController.createBook.bind(booksController));
-router.put('/:id', booksController.updateBook.bind(booksController));
-//router.patch('/:id', booksController.updateBook);
-router.delete('/:id', booksController.deleteBook.bind(booksController));
+// Definición de las rutas de comando (Command Routes):
 
+router.post('/', booksController.createBook.bind(booksController)); // Ruta para crear un nuevo libro
+router.put('/:id', booksController.updateBook.bind(booksController)); // Ruta para actualizar un libro existente por su ID
+router.delete('/:id', booksController.deleteBook.bind(booksController)); // Ruta para eliminar un libro por su ID
 
+// Exportamos el enrutador para que pueda ser utilizado en otros archivos
 module.exports = router;
