@@ -4,7 +4,7 @@
   "description": "ceij libros",
   "main": "app/service.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js"
   },
   "author": "Ceij",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "hbs": "^4.2.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.10.1",
     "notenv": "^2.0.3"
