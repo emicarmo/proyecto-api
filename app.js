@@ -1,5 +1,13 @@
-const RestApiServer = require('./app/restApi/rest.server');
+// App
+const express = require('express');
+const app = express();
+const router = require('./app/restApi/middlewares/auth');
 
-const restApiServer = new RestApiServer();
+// Port
+const PORT = process.env.PORT || 5000;
 
-restApiServer.start();
+app.use('/api', router);
+
+app.listen(PORT, ()=>{
+    console.log(`Servidor api corriendo en el puerto ${PORT}`);
+});
