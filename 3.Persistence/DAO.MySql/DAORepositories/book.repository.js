@@ -8,7 +8,7 @@ class BookRepository extends BaseRepository {
     async getAll(){
         const sql = `SELECT libros.*, categoria.nombre_cat as categoria FROM ${this.tableName} LEFT JOIN categoria on categoria.id_categoria = libros.categoria_id`;
         return await this.query(sql);
-                                    }
+    }
 
     async findById(id){
         const sql = `SELECT libros.*, categoria.nombre_cat as categoria FROM ${this.tableName} LEFT JOIN categoria on categoria.id_categoria = libros.categoria_id where libros.id_libros = ${id}`;
