@@ -1,3 +1,10 @@
+- Actualizo: domingo 30 de junio 2024 - 16:00
+Creo archivo front.static.routes.js para atender la solicitudes GET del frontend y servir las paginas estaticas y la onfiguracion de las vasiables de entorno en GET/config
+Se modifican los archivos front.server.js y rest.server.js para corregir las rutas usuarios
+Se corrigen los archivos base.repository.js y user.repository.js para que el registro de nuevos usuarios se limite a pedir 3 campos: usuario, email y contraseña
+Se modifica validator.js por el mismo motivo
+Se cambvia createUser en controllers en user.controller para adaptarlo a los nuevos requerimientos, se deja comentado el codigo anterior
+
 - Actualizo: jueves 27 de junio 2024 - 21:30
 Creo archivo validator.js para validar el formato de los datos en carpeta Utils en raiz. 
 Creo los archivos user. model, controllers y routes (este en proseso, aun no definido)

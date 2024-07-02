@@ -5,14 +5,7 @@ const { UsersController } = require('../controllers/index');
 const router = Router();
 const usersController = new UsersController();
 
-/* --------------------- Ruta para enviar configuracion al front ----------------------------- */
-/*
-router.get('/config', (req, res) => {
-    res.json({
-        backendUrl: process.env.BACKEND_URL // Variable de entorno del backend para ser enviada
-    });
-});
-*/
+
 /* --------------------- Rutas para usuarios ----------------------------- */
 
 router.post('/usuario/register', usersController.createUser.bind(usersController));// Registro de usuario

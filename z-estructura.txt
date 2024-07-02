@@ -11,6 +11,7 @@ PROYECTO-API/
                 auth.middleware.js
             routes/
                 book.routes.js
+                front.static.routes.js
                 user.routes.js
             rest.server.js          
     2.Domain
