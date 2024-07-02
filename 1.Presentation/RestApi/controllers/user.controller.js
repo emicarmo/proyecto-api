@@ -58,7 +58,7 @@ class UsersController {
     }
 
     // Commands functions
-    /* Comento para poner una mas especifica para buscar error deregfistro por campos requeridos
+    /* Comento para poner una mas especifica para buscar error de regfistro por campos requeridos
     async createUser(req = request, res = response) {
         try {
             const userEntity = req.body;
@@ -74,25 +74,48 @@ class UsersController {
     async createUser(req = request, res = response) {
         try {
             const { usuario, email, contrasena } = req.body;// Extraigo solo los campos necesarios del body
+                if (!usuario || !email || !contrasena) {// Valido que los campos requeridos esten
+                    return res.status(400).json({ error: 'Debe proporcionar nombre de usuario, email y contraseña' });
+               }
 
-            if (!usuario || !email || !contrasena) {// Valido
-                return res.status(400).json({ error: 'Debe proporcionar nombre, email y contraseña' });
-            }
+                const userEntity = {// Creamos un objeto con estos datos
+                    usuario,
+                    email,
+                    contrasena
+                };
+                console.log('userEntity:', userEntity);// BORRAR
+                validator.validateUser(userEntity);// Validamos los datos
+                console.log('Después de validar userEntity en controller luego de crearla y validarla');// BORRAR
+                const result = await this.model.add(userEntity);// Agregamos el usuario utilizando el modelo
+                console.log('en controller: Resultado de la inserción:', result);//BORRAR
+                console.log('en controller: Resultado de la inserción:', result.result);//BORRAR
+                console.log('en controller devolucion de result.result.insertId:', result.result.insertId);// BORRAR     
+                    if (!result || !result.result || !result.result.insertId) {// Lanzamos una excepcion error si el usuario no se registra correctamente
+                        throw new Error('en copntroller: Error al registrar el usuario');
+                    }
+                console.log('en controller 2 throw: Resultado de la inserción:', result);//BORRAR
+                console.log('en controller 2 throw: Resultado de la inserción:', result.result);//BORRAR
+                console.log('en controller 2 throw: devolucion de result.result.insertId:', result.result.insertId);// BORRAR   
+                   
 
-            const userEntity = {// Creamos un objeto con estos campos
-                usuario,
-                email,
-                contrasena
-            };
+                    res.json({ success: true, message: 'Usuario registrado exitosamente', result, userEntity });// Enviamos la respuesta de exito
+            
 
-            validator.validateUser(userEntity);// Valida la entidad del usuario
+            } catch (error) {// Atrapamos errores y los personalizamos segun el caso
+                    let errorMessage;
+            
+                    if (error.message.includes('validation')) {
+                        errorMessage = 'en controller: Error de validación de datos del usuario';
 
-            const result = await this.model.add(userEntity);// Agregamos el usuario utilizando el modelo
+                    } else if (error.message.includes('database')) {
+                        errorMessage = 'en controller: Error de base de datos al registrar el usuario';
 
-            res.json({ result, userEntity });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
+                    } else {
+                        errorMessage = 'en controller: Error al registrar el nuevo usuario';
+                    }
+            
+                    res.status(500).json({ success: false, message: errorMessage, error: error.message});// Enviamos una respuesta de error personalizada
+                }
     }
 
     async updateUser(req = request, res = response) {

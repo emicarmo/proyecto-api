@@ -43,11 +43,21 @@ class BaseRepository{ // Creamos clase general para realizar metodos CRUD
         Prefiero ponerlo aqui y no al final ya que sera usado por los dos proximos metodos: add y update, asi es mas facil su visualizacion y entendimiento */
     }
 
-    async add(entity){ //book es un objeto del tipo bookEntity // Para agregar un nuevo registro a la tabla
-        this.extractData(entity);// Extrae los datos del objeto entity
+    async add(entity){// Para agregar un nuevo registro a la tabla
+        try{
+            this.extractData(entity);// Extrae los datos del objeto entity
+                console.log('en base repository: this.extractData', entity);
+                console.log('en base repository: ',this.extractData, entity);
+            const sql = `INSERT INTO ${this.tableName} (${[...this.fields]}) VALUES (${[...this.values.map(value=> `"${value}"`)]})`;// Determina la tabla, los campos y sus valores                                                            
+                console.log('en base repository: Resultado de la consulta:', sql);
+                const result = await this.query(sql);// Insertar el nuevo registro
+                console.log('en base repository: Mostrar result que se devuelve:', result);
+                return result;
 
-        const sql = `INSERT INTO ${this.tableName} (${[...this.fields]}) VALUES (${[...this.values.map(value=> `"${value}"`)]})`;// Determina la tabla, los campos y sus valores
-        return await this.query(sql);// Insertar el nuevo registro
+        } catch (error) {
+                console.error('en base repository: Error al ejecutar la consulta:', error);
+                throw error;// Re-lanza el error para que pueda ser capturado por quien lo llama
+        }
     }
 
     async update(entity, id){ // Actualiza un registro existente en la tabla //

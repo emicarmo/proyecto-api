@@ -16,14 +16,19 @@ class UserModel {
 
     async add(userEntity) {
         try {
+            console.log('en model: Antes de validar userEntity en UserModel:', userEntity);// BORRAR
             validator.validateUser(userEntity);
+            console.log('en model: Después de validar userEntity en UserModel:', userEntity);// BORRAR
             const result = await this.repository.add(userEntity);
+            console.log('en user.model : Resultado de la consulta:', result);// BORRAR
             return { result };
+            
         } catch (error) {
+            console.error('Error en UserModel:', error); // BORRAR
             if (error.isJoi) {
-                return { error: `Error de validación: ${error.message}` };// Error de validacion de datos
+                return { error: `en model: Error de validación: ${error.message}` };// Error de validacion de datos
             }
-            return { error: `Error al agregar usuario: ${error.message}` };// Otro tipo de error, por ejemplo, de la base de datos
+            return { error: `en model: Error al agregar usuario: ${error.message}` };// Otro tipo de error, por ejemplo, de la base de datos
         }
     }
 
