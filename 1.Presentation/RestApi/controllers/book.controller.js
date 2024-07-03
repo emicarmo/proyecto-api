@@ -23,9 +23,7 @@ class booksController {
         const id = req.params.id;
         const result = await this.model.getById(id);
 
-        res.json({
-            result
-        });
+        (result.length > 0)?res.json(result[0]): res.status('404').json();
     }
 
     // Commands functions

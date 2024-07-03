@@ -13,7 +13,8 @@ class RestApiServer {
 
     middlewares() {
         this.server.use(express.json());
-        this.server.use(cors({ origin: process.env.FRONTEND_URL }));// Sacar llaves con origin si causa problemas
+        this.server.use(cors());
+        //this.server.use(cors({ origin: process.env.FRONTEND_URL }));// Sacar llaves con origin si causa problemas // Probar y SACAR
         //Agregar aqui otros middleware (recordar importacion si es necesario)
     }
 

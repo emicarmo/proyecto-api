@@ -8,7 +8,7 @@ class BookModel {
     //TODO: Create a standard response object to be returned.
 
     async getAll(){
-        return await this.repository.findAll();
+        return await this.repository.getAll();
     }
 
     async getById(id){

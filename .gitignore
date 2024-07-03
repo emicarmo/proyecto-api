@@ -1,3 +1,6 @@
+#public folder (pointed to another repo)
+/1.Presentation/Frontend/public
+
 # Logs
 logs
 *.log
