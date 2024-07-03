@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();//Se requiere para usar variables de entorno
 
 class RestApiServer {
@@ -12,12 +13,15 @@ class RestApiServer {
 
     middlewares() {
         this.server.use(express.json());
-        //Agregar aquí otros middleware (recordar importacion si es necesario)
+        this.server.use(cors({ origin: process.env.FRONTEND_URL }));// Sacar llaves con origin si causa problemas
+        //Agregar aqui otros middleware (recordar importacion si es necesario)
     }
 
     routes() {
         this.server.use('/api/books', require('./routes/book.routes'));
-        //Agregar aquí otras rutas
+        this.server.use('/api', require('./routes/front.static.routes'));//Agregada para get /config en front.static
+        this.server.use('/api/users', require('./routes/user.routes'));//Agregada para usuarios
+        //Agregar aqui otras rutas
     }
 
     start() {
@@ -25,7 +29,9 @@ class RestApiServer {
             console.log(`Rest Api server initiated on  port: ${this.port}`);
         });
     }
+    
 }
+
 
 module.exports = RestApiServer;
 

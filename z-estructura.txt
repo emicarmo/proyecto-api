@@ -1,0 +1,44 @@
+PROYECTO-API/
+    1.Presentation/
+        Frontend/
+            front.server.js
+        RestApi/
+            controllers/
+                book.controller.js
+                index.js
+                usuario.controller.js
+            middleware/
+                auth.middleware.js
+            routes/
+                book.routes.js
+                front.static.routes.js
+                user.routes.js
+            rest.server.js          
+    2.Domain
+        Models/
+            book.model.js
+            index.js
+            user.model.js
+    .gitkeep     
+    3.Persistence
+        DAO.MySql/
+            DAORepositories/
+                base.repository.js
+                book.repository.js
+                user.repository.js
+            db.config.js
+            index.js
+        .gitkeep 
+    node_modules/
+    Utils/
+        validator.js
+    .env            
+    .gitignore
+    app.js
+    package-lock.json
+    package.json
+    README.md
+    z-estructura.txt
+                                
+
+                                

@@ -15,7 +15,6 @@ class DataBaseServer {
             connectionLimit: 10,
             queueLimit: 0
         }).promise();
-
     }
     //Creamos, si no existe, o confirmamos la base de datos
     async dbReady() {
@@ -36,26 +35,28 @@ class DataBaseServer {
         } finally {
             await dbConnection.end();
         }
-
     }
     //inicializamos y guardamos estos datos que seran llamados al momento de Instanciar la clase
     dbConnection() {
         return this.pool;
     }
+
     dbPort() {
         return this.port;
     }
+    
     dbName() {
         return this.name;
     }
 
 }
 
+
 module.exports = DataBaseServer;
 
 
 
-/* ---------------- Anteriormente Con Funciones ---------------------------------- */
+/* ---------------- Anteriormente Con Funciones --------------------------------- */
 /*const mysql = require('mysql2');
 require('dotenv').config();
 
