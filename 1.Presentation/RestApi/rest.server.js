@@ -6,6 +6,7 @@ require('dotenv').config();
 // Importamos express, que es el framework para crear servidores HTTP en Node.js, y cors, para manejar las políticas de Cross-Origin Resource Sharing
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 // Definimos la clase RestApiServer que manejará nuestro servidor de API REST
 class RestApiServer {
@@ -23,13 +24,16 @@ class RestApiServer {
 
     // Método para configurar los middlewares
     middlewares() {
-        this.server.use(express.json()); // Middleware para parsear las solicitudes entrantes con JSON payloads
-        this.server.use(cors()); // Middleware para habilitar CORS
+        this.server.use(express.json());
+        this.server.use(cors());
+        // To manage file uploads
+        this.server.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
     }
 
     // Método para configurar las rutas
     routes() {
-        this.server.use('/api/books', require('./routes/book.routes'));// Ruta para manejar las solicitudes relacionadas con los libros
+        this.server.use('/api/books', require('./routes/book.routes'));
+        this.server.use('/api/categories', require('./routes/category.routes'));
     }
 
     // Método para iniciar el servidor

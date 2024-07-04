@@ -1,6 +1,7 @@
 // Importamos express, que es el framework para crear servidores HTTP en Node.js, y path, que es un módulo de Node.js para trabajar con rutas de archivos y directorios
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 
 // Definimos la clase FrontServer que manejará nuestro servidor del frontend
 class FrontServer {
@@ -8,19 +9,19 @@ class FrontServer {
         // Inicializamos una instancia de un servidor Express
         this.server = express();
 
-        // Definimos el puerto en el que correrá el servidor, en este caso, el puerto 8080
-        this.port = 8080;
-
-        // Definimos la ruta a la carpeta 'public', que contendrá los archivos estáticos del frontend
-        this.publicPath = path.join(__dirname, 'public');
-
-        // Inicializamos los middlewares
-        this.middlewares();
+        this.port = process.env.FRONTEND_PORT || 8080;
+        
+        //this.publicPath = path.join(__dirname, 'public');
+        this.basePath = path.join(__dirname, process.env.FRONTEND_PATH)
+        
+        this.middlewares(); //Initialized middlewares
     }
 
-    // Método para configurar los middlewares
-    middlewares() {
-        this.server.use(express.static(this.publicPath)); // Middleware para servir archivos estáticos desde el directorio 'public'
+    middlewares(){
+        //this.server.use(express.json());
+        //this.server.use(express.static(this.publicPath)); // Se agrega para servir archivos estaticos desde el directorio del frontend: ProyectoCaC
+        this.server.use(express.static(this.basePath));
+
     }
 
     // Método para iniciar el servidor
