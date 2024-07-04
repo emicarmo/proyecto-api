@@ -2,7 +2,7 @@ const path = require('path');
 
 
 
-const uploadPath = path.join(__dirname, '../../Frontend/', 'public', 'images');
+const uploadPath = path.join(__dirname, '../../Frontend/', 'public', 'image');
 const baseImagePath = "image/";
 
 async function upload(file){
