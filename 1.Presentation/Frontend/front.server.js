@@ -1,12 +1,13 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 
 class FrontServer{
     constructor(){
         this.server = express();
-        this.port = 8080;
+        this.port = process.env.FRONTEND_PORT || 8080;
         
-        this.publicPath = path.join(__dirname, 'public');
+        this.publicPath = path.join(__dirname, process.env.FRONTEND_PATH);
         
         this.middlewares(); //Initialized middlewares
     }

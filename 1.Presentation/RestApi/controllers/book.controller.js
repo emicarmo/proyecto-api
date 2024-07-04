@@ -1,6 +1,7 @@
 const { request, response } = require('express');
 const { BookModel } = require('../../../2.Domain/Models/index');
-const multer = require('multer')
+const { upload } = require('../../helpers/index');
+
 
 class booksController {
     constructor(){
@@ -28,13 +29,23 @@ class booksController {
 
     // Commands functions
     async createBook(req = request, res = response){
-        const bookEntity = req.body;
-        const result = await this.model.add(bookEntity)
+        try{
+            const image = await upload(req.files);
 
-        res.json({
-            result,
-            bookEntity
-        });
+            const bookEntity = req.body;
+            bookEntity.imagen = image;
+            
+            const result = await this.model.add(bookEntity);
+
+            res.json({
+                result,
+                bookEntity
+            });
+
+        }catch(error){
+            console.log(error);
+            res.status(400).json({msg: error.message});
+        }
     }
 
     async updateBook(req = request, res= response){
