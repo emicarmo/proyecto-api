@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();//Se requiere para usar variables de entorno
+const fileUpload = require('express-fileupload');
 
 class RestApiServer {
     constructor() {
@@ -23,6 +24,7 @@ class RestApiServer {
         this.server.use('/api', require('./routes/front.static.routes'));//Agregada para get /config en front.static
         this.server.use('/api/users', require('./routes/user.routes'));//Agregada para usuarios
         //Agregar aqui otras rutas
+        this.server.use('/api/categories', require('./routes/category.routes'));
     }
 
     start() {
