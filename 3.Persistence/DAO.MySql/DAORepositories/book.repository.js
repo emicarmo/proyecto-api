@@ -15,6 +15,7 @@ class BookRepository extends BaseRepository {
         return await this.query(sql);
     }
 
+
     async delete(id){
         const sql = `delete from ${this.tableName} where id_libros = ${id}`;
         return await this.query(sql, [id]);

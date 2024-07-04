@@ -15,11 +15,11 @@ class BookModel {
         return await this.repository.findById(id);
     }
 
-    async add(bookentity){
+    async add(nombre, categoria_id, editorial, precio, stock, descripcion, imagen){
         //TODO: Validation data and sanitizacion
 
         try{
-            const result = await this.repository.add(bookentity);
+            const result = await this.repository.add(nombre, categoria_id, editorial, precio, stock, descripcion, imagen);
             return { result };
         }catch(error){
             return { error };

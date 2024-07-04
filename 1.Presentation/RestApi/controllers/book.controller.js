@@ -1,6 +1,6 @@
 const { request, response } = require('express');
 const { BookModel } = require('../../../2.Domain/Models/index');
-
+const multer = require('multer')
 
 class booksController {
     constructor(){
@@ -29,7 +29,7 @@ class booksController {
     // Commands functions
     async createBook(req = request, res = response){
         const bookEntity = req.body;
-        const result = await this.model.add(bookEntity);
+        const result = await this.model.add(bookEntity)
 
         res.json({
             result,

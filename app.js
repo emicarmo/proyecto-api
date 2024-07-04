@@ -1,22 +1,8 @@
 const RestApiServer = require('./1.Presentation/RestApi/rest.server');
 const FrontServer = require('./1.Presentation/Frontend/front.server');
 
-(async()=>{
-    await main();
-})()
+const restApiServer = new RestApiServer();
+const frontServer = new FrontServer();
 
-
-//entry point function
-async function main(){
-
-
-    const restApiServer = new RestApiServer();
-    const frontServer = new FrontServer();
-    
-    restApiServer.start();
-    frontServer.start();
-
-
-
-
-}
+restApiServer.start();
+frontServer.start();
