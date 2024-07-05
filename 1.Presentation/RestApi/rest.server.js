@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 class RestApiServer {
     constructor() {
@@ -15,10 +17,14 @@ class RestApiServer {
 
     middlewares() {
         this.server.use(express.json());
+        this.server.use(cors());
+        // To manage file uploads
+        this.server.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
     }
 
     routes() {
         this.server.use('/api/books', require('./routes/book.routes'));
+        this.server.use('/api/categories', require('./routes/category.routes'));
     }
 
     start() {
