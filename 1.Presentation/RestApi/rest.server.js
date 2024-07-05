@@ -15,7 +15,8 @@ class RestApiServer {
     middlewares() {
         this.server.use(express.json());
         this.server.use(cors());
-        //this.server.use(cors({ origin: process.env.FRONTEND_URL }));// Sacar llaves con origin si causa problemas // Probar y SACAR
+        //this.server.use(cors({ origin: process.env.FRONTEND_URL }));// Sacar llaves con origin si causa problemas // Probar y SACA
+        this.server.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));// To manage file uploads
         //Agregar aqui otros middleware (recordar importacion si es necesario)
     }
 
@@ -23,8 +24,8 @@ class RestApiServer {
         this.server.use('/api/books', require('./routes/book.routes'));
         this.server.use('/api', require('./routes/front.static.routes'));//Agregada para get /config en front.static
         this.server.use('/api/users', require('./routes/user.routes'));//Agregada para usuarios
-        //Agregar aqui otras rutas
         this.server.use('/api/categories', require('./routes/category.routes'));
+        //Agregar aqui otras rutas
     }
 
     start() {
