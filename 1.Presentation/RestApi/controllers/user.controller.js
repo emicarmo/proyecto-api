@@ -58,18 +58,6 @@ class UsersController {
     }
 
     // Commands functions
-    /* Comento para poner una mas especifica para buscar error de regfistro por campos requeridos
-    async createUser(req = request, res = response) {
-        try {
-            const userEntity = req.body;
-            validator.validateUser(userEntity);
-            const result = await this.model.add(userEntity);
-            res.json({ result, userEntity });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-    */
 
     async createUser(req = request, res = response) {
         try {

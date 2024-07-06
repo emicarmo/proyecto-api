@@ -15,7 +15,6 @@ class RestApiServer {
     middlewares() {
         this.server.use(express.json());
         this.server.use(cors());
-        //this.server.use(cors({ origin: process.env.FRONTEND_URL }));// Sacar llaves con origin si causa problemas // Probar y SACA
         this.server.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));// To manage file uploads
         //Agregar aqui otros middleware (recordar importacion si es necesario)
     }

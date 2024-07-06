@@ -13,7 +13,7 @@ PROYECTO-API/
                 index.js
                 usuario.controller.js
             middleware/
-                auth.middleware.js
+                auth.JwToken.js   
             routes/
                 book.routes.js
                 category.routes.js
