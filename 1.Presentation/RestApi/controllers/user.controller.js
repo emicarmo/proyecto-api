@@ -73,15 +73,15 @@ class UsersController {
 
     async createUser(req = request, res = response) {
         try {
-            const { usuario, email, contrasena } = req.body;// Extraigo solo los campos necesarios del body
-                if (!usuario || !email || !contrasena) {// Valido que los campos requeridos esten
+            const { usuario, email, password } = req.body;// Extraigo solo los campos necesarios del body
+                if (!usuario || !email || !password) {// Valido que los campos requeridos esten
                     return res.status(400).json({ error: 'Debe proporcionar nombre de usuario, email y contraseña' });
                }
 
                 const userEntity = {// Creamos un objeto con estos datos
                     usuario,
                     email,
-                    contrasena
+                    password
                 };
                 console.log('userEntity:', userEntity);// BORRAR
                 validator.validateUser(userEntity);// Validamos los datos

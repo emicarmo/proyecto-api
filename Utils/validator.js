@@ -7,7 +7,7 @@ class Validator {
         this.userSchema = Joi.object({
             usuario: Joi.string().max(45).required(),
             email: Joi.string().max(100).required(),// Quito .email() para que acepte otros email ejemplo: quien_lo-hizo@fui.yo // Modificar agregando .email().pattern(/RegExp personalizada/)
-            contrasena: Joi.string().min(8).max(45).required(),
+            password: Joi.string().min(8).max(45).required(),
             nombre: Joi.string().max(45).optional(),// Cambio a optional para registro nuevo usuario
             apellido: Joi.string().max(45).optional(),// Cambio a optional para registro nuevo usuario
             fecha_nacimiento: Joi.date().optional().allow(null),

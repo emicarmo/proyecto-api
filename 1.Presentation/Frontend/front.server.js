@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');// Se requiere para las direcciones de archivos y directorios
-//const FrontStaticRoutes = require('../RestApi/routes/front.static.routes'); // Importamos las rutas estaticas del frontend
 require('dotenv').config();// Se requiere para usar variables de entorno
 
 class FrontServer{
@@ -10,6 +9,7 @@ class FrontServer{
 
         //this.publicPath = path.join(__dirname, 'public');// Se agrega para ver Jonny en el mismo proyecto
         this.publicPath = path.join(__dirname, process.env.FRONTEND_PATH);// Se cambia para actualizar , comprobar si no hay error con basePath y eliminar basePath si sobra
+                console.log(`Public path desde front.server: ${this.publicPath}`); // Para ver en que direccion esta buscando la ruta cargada en .env
 
         this.basePath = path.join(__dirname, process.env.FRONTEND_PATH);// Se modifica para usar variables del entorno
                 console.log(`Base path desde front.server: ${this.basePath}`); // Para ver en que direccion esta buscando la ruta cargada en .env
@@ -38,5 +38,4 @@ class FrontServer{
 
 
 module.exports = FrontServer;
-
 
