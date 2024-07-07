@@ -8,17 +8,17 @@ const basePath = path.join(__dirname, process.env.FRONTEND_PATH);
 
 /* ------------- Ruta para obtener la configuracion del backend desde el frontend ------------- */
 router.get('/config', (req, res) => {
-    console.log('Solicitud recibida en /api/config');
+    console.log('front.static.routes: Solicitud recibida en /api/config');
     try {
         const config = {
             backendUrl: process.env.BACKEND_URL
         };
-        console.log('Enviando configuración:', config);
+        console.log('front.static.routes: Enviando configuración:', config);
         res.json(config);
 
     } catch (error) {
-        console.error('Error al obtener la configuración:', error);
-        res.status(500).json({ error: 'Error al obtener la configuración del backend' });
+        console.error('front.static.routes: Error al obtener la configuración:', error);
+        res.status(500).json({ error: 'front.static.routes: Error al obtener la configuración del backend' });
     }
 
 });
@@ -40,9 +40,10 @@ router.get('/productos.html', (req, res) => {
     res.sendFile(path.join(basePath, 'productos.html'));
 });
 
-router.get('*', (req, res) => {
+router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
+
 
 module.exports = router;
 

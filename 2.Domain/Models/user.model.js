@@ -11,7 +11,11 @@ class UserModel {
     }
 
     async getById(id) {
-        return await this.repository.findById(id);
+        try {
+            return await this.repository.searchById(id);
+        } catch (error) {
+            throw new Error(`en model : Error obteniendo usuario por ID: ${error.message}`);
+        }
     }
 
     async add(userEntity) {

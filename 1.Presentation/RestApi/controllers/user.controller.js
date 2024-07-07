@@ -1,6 +1,9 @@
 const { request, response } = require('express');
+const jwt = require('jsonwebtoken'); 
+
 const { UserModel } = require('../../../2.Domain/Models/index');
 const validator = require('../../../Utils/validator');
+const { generateToken, verifyToken }  = require('../middleware/auth.JwToken');
 
 class UsersController {
     constructor() {
@@ -19,11 +22,22 @@ class UsersController {
 
     async getById(req = request, res = response) {
         try {
-            const id = req.params.id;
+            const id = req.user.id;
+            console.log('controller 1 ;ID del usuario desde el token:', id); // borrar 
             const result = await this.model.getById(id);
+            console.log('controller 2 : Resultado de búsqueda por ID:', result); // borrar 
+            if (!result) {
+                return res.status(404).json({ message: ' en controller Usuario no encontrado' });
+            }
+    
             res.json({ result });
+
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            if (!res.headersSent) { // Verifica si los encabezados ya fueron enviados
+                res.status(500).json({ error: error.message });
+            } else {
+                console.error('controller 5 . Error después de enviar la respuesta:', error);
+            }
         }
     }
 
@@ -47,13 +61,28 @@ class UsersController {
         }
     }
 
-    async verifyCredentials(req = request, res = response) {
+    async login(req, res) {
         try {
             const { email, password } = req.body;
-            const result = await this.model.verifyCredentials(email, password);
-            res.json({ result });
+    
+            const user = await this.model.verifyCredentials(email, password);// Verifica credenciales del usuario desde model
+            if (!user) {
+                return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
+            }
+    
+            const token = jwt.sign({// Genera token
+                id_usuario: user.id, 
+                usuario: user.usuario, 
+                email: user.email  
+                },
+
+                process.env.JWT_SECRET, 
+                { expiresIn: '1h' }
+            );
+    
+            res.json({ success: true, message: 'Inicio de sesión exitoso', token });// Devuelve el token como respuesta
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ success: false, message: 'en controller: Error al iniciar sesión', error: error.message });
         }
     }
 

@@ -1,28 +1,37 @@
 // Archivo middleware JW token para autentificar sesion usuarios, se utiliza en controllers y rutas del backend y en archivos del frontend que requieran guardar sesiones
 
 const jwt = require('jsonwebtoken');
-require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
+require('dotenv').config();
 
-const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];// token toma el valor desde la cabecera de la solicitud
-
-    if (!token) {
-        return res.status(403).json({ message: 'No se proporcionó un token' });
-    }
-
-    const secretKey = process.env.JWT_SECRET;// Busca el valor en el archivo .env
-
-    jwt.verify(token, secretKey, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: 'No autorizado' });
-        }
-
-        req.userId = decoded.userId;// Devuelve el id del usuario registrado o logueado para poder utilizar otros metodos con ese usuario
-        next();
-    });
+// Generar token con datos específicos
+const generateToken = (payload) => {
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
+const verifyToken = (req, res, next) => {
+    const authHeader = req.header('Authorization');
+    if (!authHeader) {
+        return res.status(401).json({ message: 'Acceso denegado. Token no proporcionado.' });
+    }
 
-module.exports = verifyToken;
+    const token = authHeader.split(' ')[1]; // Obtener el token sin el prefijo "Bearer"
 
+    if (!token) {
+        return res.status(401).json({ message: 'Acceso denegado. Token no proporcionado.' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; // Asigna todo el objeto decodificado a req.user
+        console.log('Decoded token:', decoded); // Para depuración
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Token inválido' });
+    }
+};
+
+module.exports = {
+    generateToken,
+    verifyToken
+};
 
