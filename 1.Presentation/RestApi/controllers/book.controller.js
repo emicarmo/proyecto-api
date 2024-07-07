@@ -49,8 +49,10 @@ class booksController {
     }
 
     async updateBook(req = request, res= response){
+        const image = await upload(req.files)
         const id = req.params.id;
         const bookEntity = req.body;
+        bookEntity.imagen = image
         const result = await this.model.update(bookEntity, id);
         res.json({
             result,
