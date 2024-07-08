@@ -1,3 +1,7 @@
+
+- Actualizo: lunes 08 de julio 2024 - 13:30
+mergeo todas las actualizaciones y subo rama mergeAll
+
 - Actualizo: domingo 30 de junio 2024 - 16:00
 Creo archivo front.static.routes.js para atender la solicitudes GET del frontend y servir las paginas estaticas y la onfiguracion de las vasiables de entorno en GET/config
 Se modifican los archivos front.server.js y rest.server.js para corregir las rutas usuarios
