@@ -11,7 +11,7 @@ PROYECTO-API/
                 book.controller.js
                 category.controller.js
                 index.js
-                usuario.controller.js
+                user.controller.js
             middleware/
                 auth.JwToken.js   
             routes/
