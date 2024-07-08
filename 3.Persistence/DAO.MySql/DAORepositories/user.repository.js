@@ -9,12 +9,14 @@ class UserRepository extends BaseRepository { //Se crea una clase para user que 
 
     /* -------------------------- Metodos específicos para UserRepository ------------------ */
 
+    // Para buscar por id sin pisar getById de base repository
     async searchById(id) {
         try {
             const sql = 'SELECT id_usuarios, usuario, email, password FROM usuarios WHERE id_usuarios = ?';
             const [rows] = await this.dataBaseServer.dbConnection().query(sql, [id]);
-            console.log('en user.repository: Resultado de búsqueda por ID:', rows); // borrar Añadir para depuración
+
             return rows[0]; // Devuelve el primer usuario encontrado
+            
         } catch (error) {
             throw new Error(`Error ejecutando query: ${error.message}`);
         }
@@ -36,7 +38,16 @@ class UserRepository extends BaseRepository { //Se crea una clase para user que 
     async verifyCredentials(email, password) {
         const sql = `SELECT * FROM ${this.tableName} WHERE email = ? AND password = ?`;
         const users = await this.query(sql, [email, password]);
-        return users.length > 0; // Devuelve true si las credenciales son correctas
+        return users.length > 0 ? users[0] : null; // Devuelve el usuario si las credenciales son correctas
+    }
+
+    // Para actualizar usuario
+    async userUpdate(entity, id){ 
+        this.extractData(entity);
+    
+        const clouse = this.fields.map(field => `${field}=?`).join(', ');
+        const sql = `UPDATE ${this.tableName} SET ${clouse} WHERE id_usuarios = ?`;
+        return await this.query(sql, [...this.values, id]);
     }
 
 }

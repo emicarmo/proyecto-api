@@ -3,9 +3,16 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// Generar token con datos específicos
-const generateToken = (payload) => {
+
+const generateToken = (user) => {
+    const payload = {// Incluye los datos del usuario en el payload
+        usuario: user.usuario,
+        email: user.email,
+        password: user.password,
+        id_usuarios: user.id,
+    };
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    
 };
 
 const verifyToken = (req, res, next) => {
@@ -14,7 +21,7 @@ const verifyToken = (req, res, next) => {
         return res.status(401).json({ message: 'Acceso denegado. Token no proporcionado.' });
     }
 
-    const token = authHeader.split(' ')[1]; // Obtener el token sin el prefijo "Bearer"
+    const token = authHeader.split(' ')[1];// Obtener el token sin el prefijo "Bearer"
 
     if (!token) {
         return res.status(401).json({ message: 'Acceso denegado. Token no proporcionado.' });
@@ -22,16 +29,16 @@ const verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; // Asigna todo el objeto decodificado a req.user
-        console.log('Decoded token:', decoded); // Para depuración
+
+        req.user = decoded;// Asigna todo el objeto decodificado a req.user
         next();
+        
     } catch (error) {
         res.status(401).json({ message: 'Token inválido' });
     }
+
 };
 
-module.exports = {
-    generateToken,
-    verifyToken
-};
+
+module.exports = { generateToken, verifyToken };
 

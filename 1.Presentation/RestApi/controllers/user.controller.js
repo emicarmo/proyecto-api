@@ -22,10 +22,9 @@ class UsersController {
 
     async getById(req = request, res = response) {
         try {
-            const id = req.user.id;
-            console.log('controller 1 ;ID del usuario desde el token:', id); // borrar 
+            const id = req.user.id_usuarios;
             const result = await this.model.getById(id);
-            console.log('controller 2 : Resultado de búsqueda por ID:', result); // borrar 
+
             if (!result) {
                 return res.status(404).json({ message: ' en controller Usuario no encontrado' });
             }
@@ -64,28 +63,26 @@ class UsersController {
     async login(req, res) {
         try {
             const { email, password } = req.body;
-    
-            const user = await this.model.verifyCredentials(email, password);// Verifica credenciales del usuario desde model
-            if (!user) {
-                return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
-            }
-    
-            const token = jwt.sign({// Genera token
-                id_usuario: user.id, 
-                usuario: user.usuario, 
-                email: user.email  
-                },
 
-                process.env.JWT_SECRET, 
-                { expiresIn: '1h' }
-            );
-    
-            res.json({ success: true, message: 'Inicio de sesión exitoso', token });// Devuelve el token como respuesta
+            const user = await this.model.verifyCredentials(email, password);
+            if (!user) {
+            return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
+            }
+
+            const token = generateToken({
+                id: user.id_usuarios, 
+                usuario: user.usuario, 
+                email: user.email,
+                password: user.password  
+            });
+
+            res.json({ success: true, message: 'Inicio de sesión exitoso', token });
+
         } catch (error) {
-            res.status(500).json({ success: false, message: 'en controller: Error al iniciar sesión', error: error.message });
+            res.status(500).json({ success: false, message: 'Error al iniciar sesión', error: error.message });
         }
     }
-
+    
     // Commands functions
 
     async createUser(req = request, res = response) {
@@ -100,20 +97,14 @@ class UsersController {
                     email,
                     password
                 };
-                console.log('userEntity:', userEntity);// BORRAR
+
                 validator.validateUser(userEntity);// Validamos los datos
-                console.log('Después de validar userEntity en controller luego de crearla y validarla');// BORRAR
+
                 const result = await this.model.add(userEntity);// Agregamos el usuario utilizando el modelo
-                console.log('en controller: Resultado de la inserción:', result);//BORRAR
-                console.log('en controller: Resultado de la inserción:', result.result);//BORRAR
-                console.log('en controller devolucion de result.result.insertId:', result.result.insertId);// BORRAR     
+    
                     if (!result || !result.result || !result.result.insertId) {// Lanzamos una excepcion error si el usuario no se registra correctamente
                         throw new Error('en copntroller: Error al registrar el usuario');
                     }
-                console.log('en controller 2 throw: Resultado de la inserción:', result);//BORRAR
-                console.log('en controller 2 throw: Resultado de la inserción:', result.result);//BORRAR
-                console.log('en controller 2 throw: devolucion de result.result.insertId:', result.result.insertId);// BORRAR   
-                   
 
                     res.json({ success: true, message: 'Usuario registrado exitosamente', result, userEntity });// Enviamos la respuesta de exito
             
@@ -137,15 +128,30 @@ class UsersController {
 
     async updateUser(req = request, res = response) {
         try {
-            const id = req.params.id;
+            const id = req.user?.id || req.user?.id_usuarios;  // Verificación adicional para obtener el id correctamente
             const userEntity = req.body;
-            validator.validateUser(userEntity);
-            const result = await this.model.update(userEntity, id);
-            res.json({ result, id, userEntity });
+
+            if (!id) {
+                throw new Error("ID de usuario no definido");
+            }
+
+            const updatedFields = {}; // Filtro campos undefined para no pasar datos null
+            for (const key in userEntity) {
+                    if (userEntity.hasOwnProperty(key) && userEntity[key] !== undefined) {
+                        updatedFields[key] = userEntity[key];
+                    }
+            }
+
+            const result = await this.model.update(updatedFields, id);
+
+            res.status(200).json({ success: true, result });
+
         } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
+
+                res.status(500).json({ error: `en controller: Error al actualizar usuario: ${error.message}` });
+            }
     }
+
 
     async deleteUser(req = request, res = response) {
         try {

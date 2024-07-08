@@ -13,14 +13,14 @@ const usersController = new UsersController();
 /* --------------------- Rutas para usuarios ----------------------------- */
 
 router.post('/usuario/register', usersController.createUser.bind(usersController));// Registro de usuario
-router.post('/usuario/update',  verifyToken, usersController.updateUser.bind(usersController));// Actualizacion de datos del usuario unicamente propios
 router.post('/login', usersController.login.bind(usersController));// Inicio de sesion usuario
+router.put('/usuario/update', verifyToken,(req, res, next) => { usersController.updateUser(req, res); })// Actualizacion de datos del usuario unicamente propios
 router.get('/usuario/perfil', verifyToken, (req, res) => {// El usuario ya esta autenticado y se puede acceder a req.user.email u otros datos según sea necesario
-    console.log('Datos del usuario en req.user:', req.user); //Borrar
                 res.json({ // Obtenemos datos del usuario registrado para perfil con los mismos nombres que se crearon en controller
-                    id_usuario: req.user.id, 
+                    id: req.user.id_usuarios, 
                     usuario: req.user.usuario, 
-                    email: req.user.email 
+                    email: req.user.email,
+                    password: req.user.password
                 });
             }
         );
