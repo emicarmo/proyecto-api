@@ -24,6 +24,7 @@ router.get('/usuario/perfil', verifyToken, (req, res) => {// El usuario ya esta 
                 });
             }
         );
+router.get('/',usersController.getAll.bind(usersController));// Trae todos los usuarios
 
 /* --------------------- Rutas para administradores ----------------------------- */
 
