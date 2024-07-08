@@ -56,3 +56,5 @@ Rest Api server initiated on  port: correspondiente
 Front server initiated on  port: correspondiente
 dbconfig say: Database DB is ready.
 DB database has been created or already exists
+
+# Faltan detalles: dashboard en todas las paginas, Administrador, mejorar alert a sweetalert y otros
