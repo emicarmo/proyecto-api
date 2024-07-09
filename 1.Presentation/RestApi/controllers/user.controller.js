@@ -22,7 +22,7 @@ class UsersController {
 
     async getById(req = request, res = response) {
         try {
-            const id = req.user.id_usuarios;
+            const id = req.params.id;
             const result = await this.model.getById(id);
 
             if (!result) {

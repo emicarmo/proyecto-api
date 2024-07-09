@@ -15,6 +15,7 @@ const usersController = new UsersController();
 router.post('/usuario/register', usersController.createUser.bind(usersController));// Registro de usuario
 router.post('/login', usersController.login.bind(usersController));// Inicio de sesion usuario
 router.put('/usuario/update', verifyToken,(req, res, next) => { usersController.updateUser(req, res); })// Actualizacion de datos del usuario unicamente propios
+router.get('/:id', usersController.getById.bind(usersController));
 router.get('/usuario/perfil', verifyToken, (req, res) => {// El usuario ya esta autenticado y se puede acceder a req.user.email u otros datos según sea necesario
                 res.json({ // Obtenemos datos del usuario registrado para perfil con los mismos nombres que se crearon en controller
                     id: req.user.id_usuarios, 
@@ -25,6 +26,7 @@ router.get('/usuario/perfil', verifyToken, (req, res) => {// El usuario ya esta 
             }
         );
 router.get('/',usersController.getAll.bind(usersController));// Trae todos los usuarios
+router.delete('/:id', usersController.deleteUser.bind(usersController));
 
 /* --------------------- Rutas para administradores ----------------------------- */
 

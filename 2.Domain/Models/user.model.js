@@ -12,7 +12,7 @@ class UserModel {
 
     async getById(id) {
         try {
-            return await this.repository.searchById(id);
+            return await this.repository.getById(id);
         } catch (error) {
             throw new Error(`en model : Error obteniendo usuario por ID: ${error.message}`);
         }
@@ -52,7 +52,7 @@ class UserModel {
             const result = await this.repository.delete(id);
             return result;
         } catch (error) {
-            return { error: error.message };
+            return  error
         }
     }
 

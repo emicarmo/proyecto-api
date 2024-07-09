@@ -22,6 +22,11 @@ class UserRepository extends BaseRepository { //Se crea una clase para user que 
         }
     }
 
+    async getById(id){
+        const sql = `SELECT * FROM ${this.tableName} WHERE id_usuarios = ?`;// Consulta SQL por id
+        return await this.query(sql, [id]);// Retorna la ejecucion de la consulta y resultado
+    }
+
     // Para buscar por email
     async findByEmail(email) {
         const sql = `SELECT * FROM ${this.tableName} WHERE email = ?`;
@@ -48,6 +53,11 @@ class UserRepository extends BaseRepository { //Se crea una clase para user que 
         const clouse = this.fields.map(field => `${field}=?`).join(', ');
         const sql = `UPDATE ${this.tableName} SET ${clouse} WHERE id_usuarios = ?`;
         return await this.query(sql, [...this.values, id]);
+    }
+
+    async delete(id){
+        const sql = `DELETE FROM ${this.tableName} WHERE id_usuarios = ${id}`;
+        return await this.query(sql, [id]);
     }
 
 }
