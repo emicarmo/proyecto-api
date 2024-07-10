@@ -24,18 +24,8 @@ class DataBaseServer {
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
         }).promise();
-
-        try {
-            await dbConnection.query(`CREATE DATABASE IF NOT EXISTS \`${this.name}\`;`);
-                console.log(`dbconfig say: Database ${this.name} is ready.`);
-
-        } catch (error) {
-            console.error(`dbconfig say: Error checking/creating database ${this.name}:`, error);
-
-        } finally {
-            await dbConnection.end();
-        }
     }
+    
     //inicializamos y guardamos estos datos que seran llamados al momento de Instanciar la clase
     dbConnection() {
         return this.pool;

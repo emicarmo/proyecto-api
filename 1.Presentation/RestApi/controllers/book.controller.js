@@ -24,7 +24,7 @@ class booksController {
         const id = req.params.id;
         const result = await this.model.getById(id);
 
-        (result.length > 0)?res.json(result[0]): res.status('404').json();
+        (result.length > 0)? res.json(result[0]): res.status('404').json();
     }
 
     // Commands functions
@@ -41,7 +41,6 @@ class booksController {
                 result,
                 bookEntity
             });
-
         }catch(error){
             console.log(error);
             res.status(400).json({msg: error.message});

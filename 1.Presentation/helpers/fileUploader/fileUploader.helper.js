@@ -1,9 +1,9 @@
 const path = require('path');
 
 
-
-const uploadPath = path.join(__dirname, '../../Frontend/', 'public', 'image');
-const baseImagePath = "image/";
+const upload_dir_name = 'images';
+const uploadPath = path.join(__dirname, '../../', upload_dir_name);
+const serverUrl = 'http://34.46.27.106:3000'
 
 async function upload(file){
 
@@ -14,13 +14,18 @@ async function upload(file){
     const fileName = file.imagen.name.replace(/ /g, '_');
 
     try{
-        file.imagen.mv(`${uploadPath}/${fileName}`, (err)=>{
-            if(err){
-                console.log(err);
-                throw new Error(err);
-            }
+        await new Promise((resolve, reject)=>{
+            file.imagen.mv(`${uploadPath}/${fileName}`, (err)=>{
+                if(err){
+                    console.log(err);
+                    reject(err);
+                }else{
+                    resolve();
+                }
+            });
+
         });
-        return `${baseImagePath}${fileName}`
+        return `${serverUrl}/${upload_dir_name}/${fileName}`
     }catch(error){
         console.log(error);
         throw new Error(error);

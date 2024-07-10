@@ -1,11 +1,11 @@
 const DataBaseServer = require('../db.config');// Importamos la configuracion de la conexion a la base
 
-class BaseRepository{ // Creamos clase general para realizar metodos CRUD
+class BaseRepository{
     constructor(tableName){
-        this.tableName = tableName;// Nombre de la tabla elegida en base de datos
-        this.fields = null;// Inicializamos campos a null
-        this.values = null;// Inicializamos valores a null
-        this.dataBaseServer = new DataBaseServer(); // Instanciamos de DataBaseServer
+        this.tableName = tableName;
+        this.fields = null;
+        this.values = null;
+        this.dataBaseServer = new DataBaseServer();
     }
 
     async query(sql, params){//Se agrega aqui bloque try-catch aqui para el manejo de errores ya que todos los metodos usan this.query
@@ -19,7 +19,6 @@ class BaseRepository{ // Creamos clase general para realizar metodos CRUD
     }
 
     // Metodos de busqueda y filtrado
-
     async findById(id){
         const sql = `SELECT * FROM ${this.tableName} WHERE id = ?`;// Consulta SQL por id
         return await this.query(sql, [id]);// Retorna la ejecucion de la consulta y resultado
@@ -34,28 +33,14 @@ class BaseRepository{ // Creamos clase general para realizar metodos CRUD
 
 
     // Metodos de manipulacion de datos
-
-    async extractData(entityObject){ 
-        this.fields = Object.keys(entityObject);
-        this.values = Object.values(entityObject);
-        /* Este metodo: extractData(entitytObject) extrae, interpreta y transforma los datos entre js y sql. Asigna a this.fields un array con los nombres de campos, por ejemplo (['id', 'nombre', 'apellido',etc]); y, a this.values un array de los valores correspondientes ([1, 'Eduardo', 'ElBonito', etc]). Permitiendo luego formar el par: clave=valor
-        Al igual que todos los metodos, al ser asincrono no importa en que orden de lugar este declarado dentro de la clase.
-        Prefiero ponerlo aqui y no al final ya que sera usado por los dos proximos metodos: add y update, asi es mas facil su visualizacion y entendimiento */
-    }
-
     async add(entity){// Para agregar un nuevo registro a la tabla
         try{
             this.extractData(entity);// Extrae los datos del objeto entity
-                console.log('en base repository: this.extractData', entity);
-                console.log('en base repository: ',this.extractData, entity);
                 const sql = `INSERT INTO ${this.tableName} (${[...this.fields]}) VALUES (${[...this.values.map(value=> `"${value}"`)]})`;// Determina la tabla, los campos y sus valores                                                            
-                console.log('en base repository: Resultado de la consulta:', sql);
                 const result = await this.query(sql);// Insertar el nuevo registro
-                console.log('en base repository: Mostrar result que se devuelve:', result);
                 return result;
 
         } catch (error) {
-                console.error('en base repository: Error al ejecutar la consulta:', error);
                 throw error;// Re-lanza el error para que pueda ser capturado por quien lo llama
         }
     }
@@ -71,6 +56,11 @@ class BaseRepository{ // Creamos clase general para realizar metodos CRUD
     async delete(id){// Elimina un registro por su ID
         const sql = `DELETE FROM ${this.tableName} WHERE id=?`;
         return await this.query(sql, [id]);
+    }
+
+    async extractData(entityObject){ 
+        this.fields = Object.keys(entityObject);
+        this.values = Object.values(entityObject);
     }
 
 }
