@@ -1,30 +1,30 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const fileUpload = require('express-fileupload');
+require('dotenv').config();
 
 class RestApiServer {
     constructor() {
         this.server = express();
-        this.port = process.env.RESTAPI_PORT || 3000;
+        this.port = process.env.API_PORT;
         
-        
-        //Initialized middlewares
         this.middlewares();
-        //Initialized Routes
         this.routes();
     }
 
     middlewares() {
         this.server.use(express.json());
-        this.server.use(cors());
-        // To manage file uploads
+        this.server.use(cors({origin: 'https://jonasmz.github.io', optionsSuccessStatus: 200,}));
         this.server.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
     }
-
+    
     routes() {
         this.server.use('/api/books', require('./routes/book.routes'));
+        this.server.use('/api/users', require('./routes/user.routes'));
         this.server.use('/api/categories', require('./routes/category.routes'));
+        this.server.use('/images', express.static(path.join(__dirname, '../', 'images')));
+        // this.server.use('/api/images', (req, res)=>{ res.json(path.join(__dirname, '../', 'images')) });
     }
 
     start() {
@@ -32,6 +32,9 @@ class RestApiServer {
             console.log(`Rest Api server initiated on  port: ${this.port}`);
         });
     }
+    
 }
 
+
 module.exports = RestApiServer;
+
