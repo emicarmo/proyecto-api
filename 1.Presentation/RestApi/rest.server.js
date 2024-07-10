@@ -15,7 +15,7 @@ class RestApiServer {
 
     middlewares() {
         this.server.use(express.json());
-        this.server.use(cors());
+        this.server.use(cors({origin: 'https://jonasmz.github.io', optionsSuccessStatus: 200,}));
         this.server.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
     }
     
