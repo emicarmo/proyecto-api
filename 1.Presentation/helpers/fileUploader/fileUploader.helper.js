@@ -3,7 +3,7 @@ const path = require('path');
 
 const upload_dir_name = 'images';
 const uploadPath = path.join(__dirname, '../../', upload_dir_name);
-const serverUrl = 'http://34.46.27.106:3000'
+const serverUrl = 'https://proyecto-api-q9a2.onrender.com'
 
 async function upload(file){
 
